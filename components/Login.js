@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import axios from "axios";
 import styles from "../styles/Auth.module.css"; // Import the CSS module
 
 const Login = () => {
@@ -24,12 +25,30 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate input fields
+    if (!inputs.username || !inputs.password || !selectedRole) {
+      setError("One or more of the fields are empty");
+      return;
+    }
+
     try {
-      // Simulate login logic
-      console.log({ ...inputs, role: selectedRole });
-      router.push("/");
+      // Send a request to the authentication API route
+      const response = await axios.post("/api/auth/login", {
+        ...inputs,
+        role: selectedRole,
+      });
+
+      // Check if the login was successful
+      if (response.status === 200) {
+        // Redirect to the home page or another page upon successful login
+        router.push("/");
+      } else {
+        setError("Invalid credentials");
+      }
     } catch (err) {
-      setError("Invalid credentials");
+      console.error("Error logging in:", err);
+      setError("An error occurred during login");
     }
   };
 

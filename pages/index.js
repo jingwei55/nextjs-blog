@@ -20,8 +20,8 @@ const Home = () => {
 
       {/* Main content based on the route */}
       <main>
-        <section className={styles.hero}>
-          <div className={styles.heroContent}>
+        <section className={styles.main}>
+          <div className={styles.mainContent}>
             <h1>Welcome to Fauget Pet Shelter and Care!</h1>
             <p>Your trusted platform for pet adoption and care resources.</p>
           </div>

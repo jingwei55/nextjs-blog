@@ -26,7 +26,30 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate input fields
+    if (
+      !inputs.username ||
+      !inputs.email ||
+      !inputs.password ||
+      !selectedRole
+    ) {
+      setError("One or more of the fields are empty");
+      return;
+    }
+
     try {
+      // Check if the username or email already exists
+      const userCheck = await axios.post("/api/auth/checkUser", {
+        username: inputs.username,
+        email: inputs.email,
+      });
+
+      if (userCheck.data.exists) {
+        setError("Username or email already exists");
+        return;
+      }
+
       // Include the selected role in the registration data
       const res = await axios.post("/api/auth/register", {
         ...inputs,
@@ -94,11 +117,10 @@ const Register = () => {
             Member
           </label>
         </div>
-
         <button className={styles.button} onClick={handleSubmit}>
           Register
         </button>
-        {err && <p className={styles.p}>{err}</p>}
+        {err && <p className={styles.error}>{err}</p>}
         <span className={styles.span}>
           Do you have an account? <Link href="/login">Login</Link>
         </span>
