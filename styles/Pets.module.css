@@ -1,0 +1,39 @@
+/* styles/Pets.module.css */
+.petsContainer {
+    margin: 20px;
+  }
+  
+  .petItem {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .petName {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .petDescription {
+    margin-top: 5px;
+    color: #555;
+  }
+  
+  .adoptToggle {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .adoptText {
+    margin-right: 10px;
+  }
+  
+  /* Styling for images (adjust as needed) */
+  .petImage {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+  }
+  

@@ -1,0 +1,77 @@
+/* styles/Navbar.module.css */
+.navbar {
+  background-color: #3498db;
+  color: #fff;
+  padding: 1rem;
+  padding-right: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+  max-width: 100px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.navLinks a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+  padding-top: 8px;
+  padding-left: 20px;
+}
+
+.navLinks a:hover {
+  color: #ecf0f1;
+}
+
+.viewDetails {
+  position: relative;
+  padding-left: 20px;
+}
+
+.viewDetailsButton {
+  color: #fff;
+  text-decoration: none;
+  background-color: #e74c3c; /* Different color for the "View Details" button */
+  padding: 8px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.viewDetailsButton:hover {
+  background-color: #c0392b; /* Hover color for the "View Details" button */
+}
+
+.viewDetailsOptions {
+  position: absolute;
+  top: 100%;
+  left: 10;
+  background-color: #2980b9;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1; /* Ensure the dropdown is above other elements */
+}
+
+.viewDetails.active .viewDetailsOptions {
+  display: flex;
+}

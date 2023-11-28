@@ -1,0 +1,34 @@
+/* styles/EventsWorkshops.module.css */
+.eventsWorkshopsContainer {
+    margin: 20px;
+  }
+  
+  .eventsWorkshopsList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .eventWorkshopItem {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .eventWorkshopItem h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .eventWorkshopItem p {
+    margin-top: 5px;
+    color: #555;
+  }
+  
+  .eventWorkshopItem label {
+    margin-left: 5px;
+  }
+  
+  .eventWorkshopItem input {
+    margin-right: 5px;
+  }
+  

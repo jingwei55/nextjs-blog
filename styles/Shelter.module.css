@@ -1,0 +1,26 @@
+/* styles/Shelter.module.css */
+.shelterContainer {
+    margin: 20px;
+  }
+  
+  .shelterList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .shelterItem {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .shelterItem h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .shelterItem p {
+    margin-top: 5px;
+    color: #555;
+  }
+  
