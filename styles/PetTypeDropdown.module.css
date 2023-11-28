@@ -1,0 +1,36 @@
+/* styles/petTypeDropdown.css */
+
+.pet-type-dropdown {
+    /* display: flex;
+    flex-direction: column;
+    gap: 10px; */
+    margin: 20px;
+  
+  .label {
+    display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+  }
+  
+  .input {
+    width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        font-size: 16px;
+  }
+  
+  
+  .button {
+    padding: 10px;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .p {
+    margin-top: 15px;
+        font-weight: bold;
+        color: #3498db;
+  }
+}
+  

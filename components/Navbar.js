@@ -32,8 +32,8 @@ const Navbar = () => {
           <button className={styles.viewDetailsButton}>View Details</button>
           {viewDetailsOpen && (
             <div className={styles.viewDetailsOptions}>
-              <Link href="/shopping-cart">View Shopping Cart</Link>
-              <Link href="/surrender-pet">Surrender a Pet</Link>
+              <Link href="/cart">View Shopping Cart</Link>
+              <Link href="/surrenderpet">Surrender a Pet</Link>
             </div>
           )}
         </div>

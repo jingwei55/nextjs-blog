@@ -1,0 +1,41 @@
+/* styles/Cart.module.css */
+.cartContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .cartList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cartItem {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .itemName {
+    font-weight: bold;
+  }
+  
+  .itemQuantity,
+  .itemPrice {
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .totalContainer {
+    margin-top: 20px;
+  }
+  
+  .totalText {
+    font-weight: bold;
+  }
+  
+  .totalAmount {
+    font-size: 1.2em;
+    color: green;
+  }
+  
