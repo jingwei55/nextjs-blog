@@ -1,6 +1,6 @@
 // pages/api/auth/login.js
 import bcrypt from "bcrypt";
-import query from "../../../path-to-query";
+import query from "../../lib/query.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
