@@ -24,13 +24,25 @@ const Cart = () => {
     fetchCartData();
   }, []);
 
+  const handleRemoveItem = async (itemID) => {
+    try {
+      // Send a request to remove the item from the cart
+      await axios.delete(`../api/cart/${itemID}`); // Replace with your actual API endpoint
+      // Refresh the cart data after removal
+      const response = await axios.get("../api/cart");
+      setCart(response.data);
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
+
   const handlePurchase = async () => {
     if (cart.totalItems > 0) {
       try {
         // Simulate purchase logic (replace with actual purchase API call)
         alert("Items bought! Expect delivery to take 1 - 2 business days");
         // Clear the cart after successful purchase
-        await axios.delete("/api/cart"); // Replace with your actual API endpoint for clearing the cart
+        await axios.delete("../api/cart"); // Replace with your actual API endpoint for clearing the cart
         setCart({
           totalCost: 0,
           totalItems: 0,
@@ -59,6 +71,9 @@ const Cart = () => {
                 <span className={styles.itemPrice}>
                   Price: ${cartItem.item.price.toFixed(2)}
                 </span>
+                <button onClick={() => handleRemoveItem(cartItem.itemID)}>
+                  Remove
+                </button>
               </li>
             ))}
           </ul>

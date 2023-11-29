@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "../styles/Navbar.module.css"; // Import the CSS module
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }) => {
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
 
   const toggleViewDetails = () => {
@@ -23,20 +23,22 @@ const Navbar = () => {
         <Link href="/shop">Shop</Link>
         <Link href="/shelter">Shelter</Link>
         <Link href="/login">Login</Link>
-        <div
-          className={`${styles.viewDetails} ${
-            viewDetailsOpen && styles.active
-          }`}
-          onClick={toggleViewDetails}
-        >
-          <button className={styles.viewDetailsButton}>View Details</button>
-          {viewDetailsOpen && (
-            <div className={styles.viewDetailsOptions}>
-              <Link href="/cart">View Shopping Cart</Link>
-              <Link href="/surrenderpet">Surrender a Pet</Link>
-            </div>
-          )}
-        </div>
+        {isLoggedIn && ( // Conditionally render "View Details" button if user is logged in
+          <div
+            className={`${styles.viewDetails} ${
+              viewDetailsOpen && styles.active
+            }`}
+            onClick={toggleViewDetails}
+          >
+            <button className={styles.viewDetailsButton}>View Details</button>
+            {viewDetailsOpen && (
+              <div className={styles.viewDetailsOptions}>
+                <Link href="/cart">View Shopping Cart</Link>
+                <Link href="/surrenderpet">Surrender a Pet</Link>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );
