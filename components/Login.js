@@ -9,8 +9,8 @@ const Login = () => {
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
+    role: "",
   });
-  const [selectedRole, setSelectedRole] = useState("");
   const [err, setError] = useState(null);
 
   const router = useRouter();
@@ -19,15 +19,11 @@ const Login = () => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate input fields
-    if (!inputs.username || !inputs.password || !selectedRole) {
+    if (!inputs.username || !inputs.password || !inputs.role) {
       setError("One or more of the fields are empty");
       return;
     }
@@ -35,8 +31,9 @@ const Login = () => {
     try {
       // Send a request to the authentication API route
       const response = await axios.post("/api/auth/login", {
-        ...inputs,
-        role: selectedRole,
+        username: inputs.username,
+        email: inputs.email,
+        role: inputs.role,
       });
 
       // Check if the login was successful
@@ -72,30 +69,20 @@ const Login = () => {
           name="password"
           onChange={handleChange}
         />
-        {/* Radio buttons for selecting role */}
-        <div className={styles.radioGroup}>
-          <label className={styles.radioLabel}>
-            <input
-              className={styles.input}
-              type="radio"
-              name="role"
-              value="employee"
-              checked={selectedRole === "employee"}
-              onChange={handleRoleChange}
-            />
-            Employee
-          </label>
-          <label className={styles.radioLabel}>
-            <input
-              className={styles.input}
-              type="radio"
-              name="role"
-              value="member"
-              checked={selectedRole === "member"}
-              onChange={handleRoleChange}
-            />
-            Member
-          </label>
+        {/* Dropdown list for selecting role */}
+        <div>
+          <label className={styles.label}>Select user type:</label>
+          <select
+            id="role"
+            name="role"
+            value={inputs.role}
+            onChange={handleChange}
+            className={styles.select}
+          >
+            <option value="">Select</option>
+            <option value="employee">Employee</option>
+            <option value="member">Member</option>
+          </select>
         </div>
         <button className={styles.button} onClick={handleSubmit}>
           Login
