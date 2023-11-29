@@ -28,8 +28,8 @@ export default async function handler(req, res) {
 
     // Check if the user exists in the database
     const results = await query(
-      `SELECT * FROM ${tableName} WHERE username = ? AND role = ?`,
-      [username, role]
+      `SELECT * FROM ${tableName} WHERE username = ?`,
+      [username]
     );
 
     if (results.length === 0) {

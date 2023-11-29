@@ -32,7 +32,7 @@ const Login = () => {
       // Send a request to the authentication API route
       const response = await axios.post("/api/auth/login", {
         username: inputs.username,
-        email: inputs.email,
+        password: inputs.password,
         role: inputs.role,
       });
 
