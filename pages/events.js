@@ -1,6 +1,6 @@
 // pages/events.js
 import Head from "next/head";
-import Events from "../components/events";
+import Events from "../components/Events";
 import Layout from "../components/Layout";
 
 const EventsPage = () => {

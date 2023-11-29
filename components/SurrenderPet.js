@@ -1,4 +1,4 @@
-// pages/surrenderPet.js
+// components/surrenderPet.js
 import React, { useState } from "react";
 import PetTypeDropdown from "../components/PetTypeDropdown";
 import styles from "../styles/SurrenderPet.module.css"; // Import the CSS module

@@ -1,4 +1,4 @@
-// pages/login.js
+// components/login.js
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -72,8 +72,9 @@ const Login = () => {
           name="password"
           onChange={handleChange}
         />
-        <div className="radio-group">
-          <label className="radio-label">
+        {/* Radio buttons for selecting role */}
+        <div className={styles.radioGroup}>
+          <label className={styles.radioLabel}>
             <input
               className={styles.input}
               type="radio"
@@ -84,7 +85,7 @@ const Login = () => {
             />
             Employee
           </label>
-          <label className="radio-label">
+          <label className={styles.radioLabel}>
             <input
               className={styles.input}
               type="radio"

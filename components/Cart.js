@@ -1,4 +1,4 @@
-// pages/cart.js
+// components/cart.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../styles/Cart.module.css"; // Import the CSS module

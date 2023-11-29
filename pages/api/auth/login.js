@@ -1,6 +1,6 @@
 // pages/api/auth/login.js
 import bcrypt from "bcrypt";
-import query from "../../lib/query.js";
+import query from "../../../lib/query";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -16,9 +16,19 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Determine the table based on the user's role
+    let tableName;
+    if (role === "employee") {
+      tableName = "employees";
+    } else if (role === "member") {
+      tableName = "members";
+    } else {
+      return res.status(400).json({ error: "Invalid role" });
+    }
+
     // Check if the user exists in the database
     const results = await query(
-      "SELECT * FROM users WHERE username = ? AND role = ?",
+      `SELECT * FROM ${tableName} WHERE username = ? AND role = ?`,
       [username, role]
     );
 
