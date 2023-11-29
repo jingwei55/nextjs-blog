@@ -1,20 +1,16 @@
 // // components/Navbar.js
 // import { useState } from "react";
 // import Link from "next/link";
-// import { useSession, signOut } from "next-auth/react";
-// import styles from "../styles/Navbar.module.css"; // Import the CSS module
+// import { useAuth } from "../context/AuthContext";
+// import styles from "../styles/Navbar.module.css";
 
 // const Navbar = () => {
 //   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
-//   const { data: session } = useSession(); // Use the useSession hook to get the user's session
 
 //   const toggleViewDetails = () => {
 //     setViewDetailsOpen(!viewDetailsOpen);
 //   };
-
-//   const handleLogout = async () => {
-//     await signOut(); // Use the signOut function from NextAuth.js to log out
-//   };
+//   const { isAuthenticated } = useAuth();
 
 //   return (
 //     <nav className={styles.navbar}>
@@ -28,43 +24,35 @@
 //         <Link href="/workshops">Workshops</Link>
 //         <Link href="/shop">Shop</Link>
 //         <Link href="/shelter">Shelter</Link>
-
-//         {/* Conditionally render the login/logout button based on the user's session */}
-//         {!session ? (
-//           <Link href="/login">Login</Link>
-//         ) : (
-//           <button onClick={handleLogout}>Logout</button>
-//         )}
-
-//         {session && (
-//           <div
-//             className={`${styles.viewDetails} ${
-//               viewDetailsOpen && styles.active
-//             }`}
-//             onClick={toggleViewDetails}
-//           >
-//             <button className={styles.viewDetailsButton}>View Details</button>
-//             {viewDetailsOpen && (
-//               <div className={styles.viewDetailsOptions}>
-//                 <Link href="/cart">View Shopping Cart</Link>
-//                 <Link href="/surrenderpet">Surrender a Pet</Link>
-//               </div>
-//             )}
+//         <Link href="/login">Login</Link> {/* Link to your login page */}
+//       </div>
+//       <div
+//         className={`${styles.viewDetails} ${viewDetailsOpen && styles.active}`}
+//         onClick={toggleViewDetails}
+//       >
+//         <button className={styles.viewDetailsButton}>View Details</button>
+//         {viewDetailsOpen && (
+//           <div className={styles.viewDetailsOptions}>
+//             <Link href="/cart">View Shopping Cart</Link>
+//             <Link href="/surrenderpet">Surrender a Pet</Link>
 //           </div>
 //         )}
 //       </div>
 //     </nav>
 //   );
 // };
+
 // export default Navbar;
 
 // components/Navbar.js
 import { useState } from "react";
 import Link from "next/link";
+import { useAuth } from "../context/AuthContext";
 import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
 
   const toggleViewDetails = () => {
     setViewDetailsOpen(!viewDetailsOpen);
@@ -82,17 +70,27 @@ const Navbar = () => {
         <Link href="/workshops">Workshops</Link>
         <Link href="/shop">Shop</Link>
         <Link href="/shelter">Shelter</Link>
-        <Link href="/login">Login</Link> {/* Link to your login page */}
-      </div>
-      <div
-        className={`${styles.viewDetails} ${viewDetailsOpen && styles.active}`}
-        onClick={toggleViewDetails}
-      >
-        <button className={styles.viewDetailsButton}>View Details</button>
-        {viewDetailsOpen && (
-          <div className={styles.viewDetailsOptions}>
-            <Link href="/cart">View Shopping Cart</Link>
-            <Link href="/surrenderpet">Surrender a Pet</Link>
+        {isLoggedIn ? (
+          <button className={styles.logout} onClick={logout}>
+            Logout
+          </button>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
+        {isLoggedIn && (
+          <div
+            className={`${styles.viewDetails} ${
+              viewDetailsOpen && styles.active
+            }`}
+            onClick={toggleViewDetails}
+          >
+            <button className={styles.viewDetailsButton}>View Details</button>
+            {viewDetailsOpen && (
+              <div className={styles.viewDetailsOptions}>
+                <Link href="/cart">View Shopping Cart</Link>
+                <Link href="/surrenderpet">Surrender a Pet</Link>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext"; // Import the useAuth hook
 import styles from "../styles/Auth.module.css"; // Import the CSS module
 
 const Login = () => {
@@ -12,6 +13,7 @@ const Login = () => {
     role: "",
   });
   const [err, setError] = useState(null);
+  const { login } = useAuth(); // Use the useAuth hook
 
   const router = useRouter();
 
@@ -35,6 +37,9 @@ const Login = () => {
         password: inputs.password,
         role: inputs.role,
       });
+
+      // Perform the login action using the login function from useAuth
+      login();
 
       // Check if the login was successful
       if (response.status === 200) {
