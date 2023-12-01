@@ -2,6 +2,11 @@
 .petsContainer {
     margin: 20px;
   }
+
+  .petList {
+    list-style: none;
+    padding: 0;
+  }
   
   .petItem {
     border: 1px solid #ddd;

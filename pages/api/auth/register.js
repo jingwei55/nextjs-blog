@@ -39,13 +39,13 @@ export default async function handler(req, res) {
     const memberId = results.insertId;
 
     // Create a new shopping cart for the member
-    // if (role === "member") {
-    //   // Insert user data into the database with Datejoined
-    //   const cartResults = await query(
-    //     "INSERT INTO cart (membersFK, totalCost, totalItems) VALUES (?, 0, 0)",
-    //     [memberId]
-    //   );
-    // }
+    if (role === "member") {
+      // Insert user data into the database with Datejoined
+      const cartResults = await query(
+        "INSERT INTO cart (totalCost, totalItems, memberFK) VALUES (0, 0, ?)",
+        [memberId]
+      );
+    }
 
     res.status(200).json({ message: "Registration successful" });
   } catch (error) {

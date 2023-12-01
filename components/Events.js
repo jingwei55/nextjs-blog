@@ -1,34 +1,39 @@
 // components/Events.js
-import React, { useState } from "react";
-import styles from "../styles/EventsWorkshops.module.css"; // Import the shared CSS module
+import React, { useState, useEffect } from "react";
+import styles from "../styles/EventsWorkshops.module.css";
 
 const Events = () => {
-  // Hardcoded event information
-  const eventsData = [
-    {
-      id: 1,
-      name: "Pet Adoption Fair",
-      description: "Join us for a day of pet adoptions!",
-      date: "2023-05-15",
-    },
-    {
-      id: 2,
-      name: "Dog Training Workshop",
-      description: "Learn basic dog training techniques.",
-      date: "2023-06-01",
-    },
-    // Add more events as needed
-  ];
-
-  // State to manage attendance status for each event
+  const [eventsData, setEventsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
-  // Function to toggle attendance status for an event
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/event");
+        const data = await response.json();
+        setEventsData(data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []); // Empty dependency array to fetch data only once on component mount
+
   const toggleAttendanceStatus = (eventId) => {
     setAttendanceStatus((prevStatus) => ({
       ...prevStatus,
       [eventId]: !prevStatus[eventId],
     }));
+  };
+
+  const formatEventDate = (dateString) => {
+    const eventDate = new Date(dateString);
+    return (
+      eventDate.toISOString().split("T")[0] +
+      " " +
+      eventDate.toLocaleTimeString()
+    );
   };
 
   return (
@@ -38,8 +43,10 @@ const Events = () => {
         {eventsData.map((event) => (
           <li key={event.id} className={styles.eventWorkshopItem}>
             <h3>{event.name}</h3>
-            <p>{event.description}</p>
-            <p>Date: {event.date}</p>
+            <p>{event.desc}</p>
+            <p>Shelter Name: {event.shelter_name}</p>
+            <p>Shelter Location: {event.shelter_location}</p>
+            <p>Date: {formatEventDate(event.date)}</p>
             <p>
               Attend Event?{" "}
               <label>

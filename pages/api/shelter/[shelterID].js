@@ -1,4 +1,4 @@
-// pages/api/pets.js
+// pages/api/shelter/[shelterID].js
 import mysql from "mysql2/promise";
 
 // Configure your MySQL connection
@@ -13,17 +13,17 @@ const pool = mysql.createPool({
 });
 
 export default async function handler(req, res) {
+  const { shelterID } = req.query;
+
   try {
     // Get a connection from the pool
     const connection = await pool.getConnection();
 
     // Execute the query
-    // const [rows] = await connection.execute("SELECT * FROM pets");
-    const [rows] = await connection.execute(`
-      SELECT pets.*, shelters.location AS shelter_location, shelters.name AS shelter_name
-      FROM pets
-      JOIN shelters ON pets.PS_FK = shelters.shelterID
-    `);
+    const [rows] = await connection.execute(
+      "SELECT * FROM shelters WHERE shelterID = ?",
+      [shelterID]
+    );
 
     // Release the connection back to the pool
     connection.release();
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     // Send the data as JSON response
     res.status(200).json(rows);
   } catch (error) {
-    console.error("Error fetching pets:", error);
+    console.error("Error fetching shelter details:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 }

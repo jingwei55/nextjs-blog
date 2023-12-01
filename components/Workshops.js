@@ -1,27 +1,25 @@
 // components/Workshops.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/EventsWorkshops.module.css"; // Import the shared CSS module
 
 const Workshops = () => {
   // Hardcoded workshop information
-  const workshopsData = [
-    {
-      id: 1,
-      name: "Pet Nutrition Workshop",
-      description: "Learn about proper pet nutrition.",
-      date: "2023-05-20",
-    },
-    {
-      id: 2,
-      name: "Cat Grooming Class",
-      description: "Tips for grooming your feline friend.",
-      date: "2023-06-10",
-    },
-    // Add more workshops as needed
-  ];
-
-  // State to manage attendance status for each workshop
+  const [workshopsData, setWorkshopsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/workshop");
+        const data = await response.json();
+        setWorkshopsData(data);
+      } catch (error) {
+        console.error("Error fetching workshops:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []); // Empty dependency array to fetch data only once on component mount
 
   // Function to toggle attendance status for a workshop
   const toggleAttendanceStatus = (workshopId) => {
@@ -31,6 +29,15 @@ const Workshops = () => {
     }));
   };
 
+  const formatWorkshopDate = (dateString) => {
+    const workshopDate = new Date(dateString);
+    return (
+      workshopDate.toISOString().split("T")[0] +
+      " " +
+      workshopDate.toLocaleTimeString()
+    );
+  };
+
   return (
     <div className={styles.eventsWorkshopsContainer}>
       <h2>Upcoming Workshops</h2>
@@ -38,8 +45,10 @@ const Workshops = () => {
         {workshopsData.map((workshop) => (
           <li key={workshop.id} className={styles.eventWorkshopItem}>
             <h3>{workshop.name}</h3>
-            <p>{workshop.description}</p>
-            <p>Date: {workshop.date}</p>
+            <p>{workshop.desc}</p>
+            <p>Shelter Name: {workshop.shelter_name}</p>
+            <p>Shelter Location: {workshop.shelter_location}</p>
+            <p>Date: {formatWorkshopDate(workshop.date)}</p>
             <p>
               Attend Workshop?{" "}
               <label>

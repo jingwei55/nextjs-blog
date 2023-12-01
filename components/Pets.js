@@ -1,23 +1,17 @@
-// components/Pets.js
-import React, { useState } from "react";
+// components / Pets.js;
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Pets.module.css"; // Import the CSS module
 
 const Pets = () => {
-  // const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([]);
 
-  // useEffect(() => {
-  //   // Fetch data from the API endpoint
-  //   fetch("/api/pets")
-  //     .then((response) => response.json())
-  //     .then((data) => setPets(data))
-  //     .catch((error) => console.error("Error fetching pets:", error));
-  // }, []);
-  const pets = [
-    { id: 1, pet_type: "Dog", age: 3, desc: "Friendly and energetic dog." },
-    { id: 2, pet_type: "Cat", age: 2, desc: "Independent and playful cat." },
-    { id: 3, pet_type: "Bird", age: 1, desc: "Colorful and talkative bird." },
-    // Add more pets as needed
-  ];
+  useEffect(() => {
+    // Fetch data from the API endpoint
+    fetch("/api/pets")
+      .then((response) => response.json())
+      .then((data) => setPets(data))
+      .catch((error) => console.error("Error fetching pets:", error));
+  }, []);
 
   // State to manage adoption status for each pet
   const [adoptionStatus, setAdoptionStatus] = useState({});
@@ -35,17 +29,20 @@ const Pets = () => {
       <h2>Available Pets</h2>
       <ul className={styles.petList}>
         {pets.map((pet) => (
-          <li key={pet.id} className={styles.petItem}>
+          <li key={pet.petID} className={styles.petItem}>
             <h3>{pet.pet_type}</h3>
             <p>Age: {pet.age} years</p>
             <p>{pet.desc}</p>
+            <p>Shelter Name: {pet.shelter_name}</p>
+            <p>Shelter Location: {pet.shelter_location}</p>
+            <p></p>
             <p>
               Adopt Pet?{" "}
               <label>
                 <input
                   type="checkbox"
-                  checked={adoptionStatus[pet.id]}
-                  onChange={() => toggleAdoptStatus(pet.id)}
+                  checked={adoptionStatus[pet.petID]}
+                  onChange={() => toggleAdoptStatus(pet.petID)}
                 />
                 Yes
               </label>

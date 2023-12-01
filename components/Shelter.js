@@ -1,34 +1,26 @@
-// // components/Shelter.js
-// import React from "react";
-// import styles from "../styles/Shelter.module.css"; // Import the shared CSS module
+// import React, { useState, useEffect } from "react";
+// import styles from "../styles/Shelter.module.css"; // Import the CSS module
 
-// const Shelter = () => {
-//   // Hardcoded shelter information
-//   const sheltersData = [
-//     {
-//       id: 1,
-//       name: "Maple Pet Shelter",
-//       location: "Toronto, ON",
-//       pet_capacity: 50,
-//     },
-//     {
-//       id: 2,
-//       name: "Rocky Mountain Animal Rescue",
-//       location: "Calgary, AB",
-//       pet_capacity: 30,
-//     },
-//     // Add more shelters as needed
-//   ];
+// const Shelter = ({ onSelectShelter }) => {
+//   const [shelters, setShelters] = useState([]);
+
+//   useEffect(() => {
+//     // Fetch data from the API endpoint
+//     fetch("/api/shelter")
+//       .then((response) => response.json())
+//       .then((data) => setShelters(data))
+//       .catch((error) => console.error("Error fetching shelters:", error));
+//   }, []);
 
 //   return (
 //     <div className={styles.shelterContainer}>
-//       <h2>Pet Shelters in Canada</h2>
+//       <h2>Shelters</h2>
 //       <ul className={styles.shelterList}>
-//         {sheltersData.map((shelter) => (
-//           <li key={shelter.id} className={styles.shelterItem}>
-//             <h3>{shelter.name}</h3>
-//             <p>Location: {shelter.location}</p>
-//             <p>Pet Capacity: {shelter.pet_capacity}</p>
+//         {shelters.map((shelter) => (
+//           <li key={shelter.shelterID} className={styles.shelterItem}>
+//             <button onClick={() => onSelectShelter(shelter.shelterID)}>
+//               {shelter.name}
+//             </button>
 //           </li>
 //         ))}
 //       </ul>
@@ -39,38 +31,24 @@
 // export default Shelter;
 
 // components/Shelter.js
-import React, { useEffect, useState } from "react";
-import styles from "../styles/Shelter.module.css";
-import { query } from "../lib/db";
+import Link from "next/link";
 
-const Shelter = () => {
-  const [shelters, setShelters] = useState([]);
-
-  useEffect(() => {
-    const fetchShelters = async () => {
-      try {
-        const results = await query("SELECT * FROM shelters");
-        setShelters(results);
-      } catch (error) {
-        console.error("Error fetching shelters:", error);
-      }
-    };
-
-    fetchShelters();
-  }, []);
+const Shelter = ({ onSelectShelter }) => {
+  const handleClick = (shelterID) => {
+    onSelectShelter(shelterID);
+  };
 
   return (
-    <div className={styles.shelterContainer}>
-      <h2>Pet Shelters in Canada</h2>
-      <ul className={styles.shelterList}>
-        {shelters.map((shelter) => (
-          <li key={shelter.shelterID} className={styles.shelterItem}>
-            <h3>{shelter.name}</h3>
-            <p>Capacity: {shelter.pet_capacity}</p>
-            <p>Description: {shelter.description}</p>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <Link href="/shelter/[shelterID]" as="/shelter/1">
+        <button onClick={() => handleClick(1)}>Shelter 1</button>
+      </Link>
+      <Link href="/shelter/[shelterID]" as="/shelter/2">
+        <button onClick={() => handleClick(2)}>Shelter 2</button>
+      </Link>
+      <Link href="/shelter/[shelterID]" as="/shelter/3">
+        <button onClick={() => handleClick(3)}>Shelter 3</button>
+      </Link>
     </div>
   );
 };
