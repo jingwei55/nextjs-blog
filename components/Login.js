@@ -39,9 +39,17 @@ const Login = () => {
 
       // Check if the login was successful
       if (response.status === 200) {
+        // Fetch the memberID based on the provided credentials
+        const userIdResponse = await axios.post("/api/auth/getUserId", {
+          username: inputs.username,
+          role: inputs.role,
+        });
+        const userID = userIdResponse.data.userID;
+        console.log("Current login by ", inputs.role, userID);
+
         // Perform the login action using the login function from useAuth
-        // const userRole = response.data.role;
-        login(inputs.role);
+        login(inputs.role, userID);
+
         // Redirect to the home page or another page upon successful login
         router.push("/");
       } else {

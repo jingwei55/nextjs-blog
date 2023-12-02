@@ -5,20 +5,23 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState(""); // Add role state
+  const [role, setRole] = useState("");
+  const [userID, setUserID] = useState(""); // Add userID state
 
-  const login = (userRole) => {
+  const login = (userRole, userID) => {
     setIsLoggedIn(true);
-    setRole(userRole); // Set the role when logging in
+    setRole(userRole);
+    setUserID(userID); // Set the userID when logging in
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setRole(""); // Clear the role when logging out
+    setRole("");
+    setUserID("");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, role }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, role, userID }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,12 +1,13 @@
-// components/Shop.js
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Shop.module.css";
-import { useAuth } from "../context/AuthContext"; // Import the AuthContext
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 const Shop = () => {
-  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContext
+  const { isLoggedIn, role, memberID } = useAuth();
   const [itemsData, setItemsData] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchShopData = async () => {
@@ -29,10 +30,34 @@ const Shop = () => {
     }));
   };
 
-  const handleAddToCart = (itemId) => {
-    console.log(
-      `Item ${itemId} added to cart with quantity: ${quantities[itemId] || 0}`
-    );
+  const handleAddToCart = async (itemId, quantity) => {
+    console.log("MemberID: ", isLoggedIn, role, memberID);
+    try {
+      if (!memberID) {
+        setError("Please log in to add items to the cart.");
+        return;
+      }
+
+      // Make a request to the API to add the item to the cart
+      //cartID same as memberID
+      await axios.post("/api/addToCart", {
+        memberID,
+        itemId,
+        quantity,
+      });
+      console.log(
+        `Item ${itemId} added to cart with quantity: ${quantities[itemId] || 0}`
+      );
+
+      // Reset quantity for the specific item after adding to the cart
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [itemId]: 0,
+      }));
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      setError("Error adding item to cart.");
+    }
   };
 
   const groupedItems = itemsData.reduce((acc, item) => {
@@ -46,12 +71,12 @@ const Shop = () => {
   return (
     <div className={styles.shopContainer}>
       <h2>Pet Store</h2>
-      {Object.keys(groupedItems).map((productType) => (
-        <div key={productType} className={styles.productTypeContainer}>
-          <h3>{productType}</h3>
+      {Object.keys(groupedItems).map((itemType) => (
+        <div key={itemType} className={styles.productTypeContainer}>
+          <h3>{itemType}</h3>
           <ul className={styles.petStoreItemList}>
-            {groupedItems[productType].map((item) => (
-              <li key={item.id} className={styles.petStoreItem}>
+            {groupedItems[itemType].map((item) => (
+              <li key={item.ItemID} className={styles.petStoreItem}>
                 <div>
                   <span className={styles.itemName}>{item.name}</span>
                   <p className={styles.itemPrice}>
@@ -64,31 +89,37 @@ const Shop = () => {
                 {isLoggedIn && role === "member" && (
                   <div className={styles.quantityContainer}>
                     <button
-                      onClick={() =>
-                        handleQuantityChange(
-                          item.id,
-                          Math.max(0, (quantities[item.id] || 0) - 1)
-                        )
-                      }
+                      onClick={() => {
+                        const currentQuantity = quantities[item.ItemID] || 0;
+                        const newQuantity = Math.max(0, currentQuantity - 1);
+                        handleQuantityChange(item.ItemID, newQuantity);
+                      }}
                     >
                       -
                     </button>
                     <span className={styles.itemQuantity}>
-                      {quantities[item.id] || 0}
+                      {quantities[item.ItemID] || 0}
                     </span>
                     <button
-                      onClick={() =>
-                        handleQuantityChange(
-                          item.id,
-                          (quantities[item.id] || 0) + 1
-                        )
-                      }
+                      onClick={() => {
+                        const currentQuantity = quantities[item.ItemID] || 0;
+                        const newQuantity = Math.min(
+                          currentQuantity + 1,
+                          item.quantity
+                        );
+                        handleQuantityChange(item.ItemID, newQuantity);
+                      }}
                     >
                       +
                     </button>
                     <button
                       className={styles.addToCartButton}
-                      onClick={() => handleAddToCart(item.id)}
+                      onClick={() =>
+                        handleAddToCart(
+                          item.ItemID,
+                          quantities[item.ItemID] || 0
+                        )
+                      }
                     >
                       Add to Cart
                     </button>

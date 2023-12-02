@@ -32,9 +32,9 @@ const Pets = () => {
       <ul className={styles.petList}>
         {pets.map((pet) => (
           <li key={pet.petID} className={styles.petItem}>
-            <h3>{pet.pet_type}</h3>
+            <h3>{pet.desc}</h3>
             <p>Age: {pet.age} years</p>
-            <p>{pet.desc}</p>
+            <p>{pet.pet_type}</p>
             <p>Shelter Name: {pet.shelter_name}</p>
             <p>Shelter Location: {pet.shelter_location}</p>
             {isLoggedIn && role === "member" && (

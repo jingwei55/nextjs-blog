@@ -255,9 +255,17 @@ const PetTypeDropdown = ({ onSubmit }) => {
         onChange={handlePetTypeChange}
       >
         <option value="">Select an option</option>
-        <option value="amphibian">Amphibian</option>
-        <option value="reptile">Reptile</option>
-        <option value="mammal">Mammal</option>
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+        <option value="fish">Fish</option>
+        <option value="bird">Bird</option>
+        <option value="hamster">Hamster</option>
+        <option value="rabbit">Rabbit</option>
+        <option value="guinea pig">Guinea Pig</option>
+        <option value="turtle">Turtle</option>
+        <option value="lizard">Lizard</option>
+        <option value="frog">Frog</option>
+        <option value="snake">Snake</option>
         <option value="other">Other</option>
       </select>
 
