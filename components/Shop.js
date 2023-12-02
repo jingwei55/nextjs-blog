@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
 const Shop = () => {
-  const { isLoggedIn, role, memberID } = useAuth();
+  const { isLoggedIn, role, userID } = useAuth();
   const [itemsData, setItemsData] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ const Shop = () => {
   };
 
   const handleAddToCart = async (itemId, quantity) => {
-    console.log("MemberID: ", isLoggedIn, role, memberID);
+    console.log("MemberID: ", isLoggedIn, role, userID);
     try {
       if (!memberID) {
         setError("Please log in to add items to the cart.");
