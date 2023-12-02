@@ -1,8 +1,10 @@
 // components / Pets.js;
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Pets.module.css"; // Import the CSS module
+import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Pets = () => {
+  const { isLoggedIn } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
@@ -35,18 +37,19 @@ const Pets = () => {
             <p>{pet.desc}</p>
             <p>Shelter Name: {pet.shelter_name}</p>
             <p>Shelter Location: {pet.shelter_location}</p>
-            <p></p>
-            <p>
-              Adopt Pet?{" "}
-              <label>
-                <input
-                  type="checkbox"
-                  checked={adoptionStatus[pet.petID]}
-                  onChange={() => toggleAdoptStatus(pet.petID)}
-                />
-                Yes
-              </label>
-            </p>
+            {isLoggedIn && (
+              <p>
+                Adopt Pet?{" "}
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={adoptionStatus[pet.petID]}
+                    onChange={() => toggleAdoptStatus(pet.petID)}
+                  />
+                  Yes
+                </label>
+              </p>
+            )}
           </li>
         ))}
       </ul>

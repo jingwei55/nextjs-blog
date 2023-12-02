@@ -1,8 +1,10 @@
 // components/Events.js
 import React, { useState, useEffect } from "react";
 import styles from "../styles/EventsWorkshops.module.css";
+import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Events = () => {
+  const { isLoggedIn } = useAuth(); // Access the isLoggedIn state from AuthContexts
   const [eventsData, setEventsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
@@ -47,17 +49,19 @@ const Events = () => {
             <p>Shelter Name: {event.shelter_name}</p>
             <p>Shelter Location: {event.shelter_location}</p>
             <p>Date: {formatEventDate(event.date)}</p>
-            <p>
-              Attend Event?{" "}
-              <label>
-                <input
-                  type="checkbox"
-                  checked={attendanceStatus[event.id]}
-                  onChange={() => toggleAttendanceStatus(event.id)}
-                />
-                Yes
-              </label>
-            </p>
+            {isLoggedIn && (
+              <p>
+                Attend Event?{" "}
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={attendanceStatus[event.id]}
+                    onChange={() => toggleAttendanceStatus(event.id)}
+                  />
+                  Yes
+                </label>
+              </p>
+            )}
           </li>
         ))}
       </ul>
