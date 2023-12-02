@@ -14,7 +14,6 @@ const Login = () => {
   });
   const [err, setError] = useState(null);
   const { login } = useAuth(); // Use the useAuth hook
-
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -38,11 +37,11 @@ const Login = () => {
         role: inputs.role,
       });
 
-      // Perform the login action using the login function from useAuth
-      login();
-
       // Check if the login was successful
       if (response.status === 200) {
+        // Perform the login action using the login function from useAuth
+        // const userRole = response.data.role;
+        login(inputs.role);
         // Redirect to the home page or another page upon successful login
         router.push("/");
       } else {

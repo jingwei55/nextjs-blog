@@ -8,7 +8,7 @@ import Shelter from "./Shelter";
 const Navbar = () => {
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
   const [selectedShelter, setSelectedShelter] = useState(null); // Track the selected shelter
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, role } = useAuth();
 
   const toggleViewDetails = () => {
     setViewDetailsOpen(!viewDetailsOpen);
@@ -44,7 +44,7 @@ const Navbar = () => {
         ) : (
           <Link href="/login">Login</Link>
         )}
-        {isLoggedIn && (
+        {isLoggedIn && role === "member" && (
           <div
             className={`${styles.viewDetails} ${
               viewDetailsOpen && styles.active

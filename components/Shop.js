@@ -4,7 +4,7 @@ import styles from "../styles/Shop.module.css";
 import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Shop = () => {
-  const { isLoggedIn } = useAuth(); // Access the isLoggedIn state from AuthContext
+  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [itemsData, setItemsData] = useState([]);
   const [quantities, setQuantities] = useState({});
 
@@ -61,7 +61,7 @@ const Shop = () => {
                   <p>Shelter Name: {item.shelter_name}</p>
                   <p>Shelter Location: {item.shelter_location}</p>
                 </div>
-                {isLoggedIn && (
+                {isLoggedIn && role === "member" && (
                   <div className={styles.quantityContainer}>
                     <button
                       onClick={() =>

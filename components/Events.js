@@ -4,7 +4,7 @@ import styles from "../styles/EventsWorkshops.module.css";
 import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Events = () => {
-  const { isLoggedIn } = useAuth(); // Access the isLoggedIn state from AuthContexts
+  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContexts
   const [eventsData, setEventsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
@@ -49,7 +49,7 @@ const Events = () => {
             <p>Shelter Name: {event.shelter_name}</p>
             <p>Shelter Location: {event.shelter_location}</p>
             <p>Date: {formatEventDate(event.date)}</p>
-            {isLoggedIn && (
+            {isLoggedIn && role === "member" && (
               <p>
                 Attend Event?{" "}
                 <label>

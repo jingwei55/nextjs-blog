@@ -4,7 +4,7 @@ import styles from "../styles/Pets.module.css"; // Import the CSS module
 import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Pets = () => {
-  const { isLoggedIn } = useAuth(); // Access the isLoggedIn state from AuthContext
+  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Pets = () => {
             <p>{pet.desc}</p>
             <p>Shelter Name: {pet.shelter_name}</p>
             <p>Shelter Location: {pet.shelter_location}</p>
-            {isLoggedIn && (
+            {isLoggedIn && role === "member" && (
               <p>
                 Adopt Pet?{" "}
                 <label>
