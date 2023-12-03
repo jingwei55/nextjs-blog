@@ -1,25 +1,27 @@
 // components/Workshops.js
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "../styles/EventsWorkshops.module.css"; // Import the shared CSS module
 import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const Workshops = () => {
-  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContext
+  const { isLoggedIn, role, userID } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [workshopsData, setWorkshopsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchWorkshops = async () => {
       try {
-        const response = await fetch("/api/workshop");
+        const response = await fetch(`/api/workshop?memberID=${userID}`);
         const data = await response.json();
         setWorkshopsData(data);
+        console.log("Workshop data: ", workshopsData);
       } catch (error) {
         console.error("Error fetching workshops:", error);
       }
     };
 
-    fetchEvents();
+    fetchWorkshops();
   }, []); // Empty dependency array to fetch data only once on component mount
 
   // Function to toggle attendance status for a workshop
@@ -28,6 +30,22 @@ const Workshops = () => {
       ...prevStatus,
       [workshopId]: !prevStatus[workshopId],
     }));
+  };
+
+  const attendWorkshop = async (workshopId) => {
+    try {
+      // Send a request to the API to link the memberID with the petID
+      await axios.post("/api/attendworkshop", {
+        memberID: userID,
+        workshopID: workshopId,
+      });
+
+      // Update the attendance status locally
+      toggleAttendanceStatus(workshopId);
+      window.alert("Attending Workshop!");
+    } catch (error) {
+      console.error("Error attending workshop:", error);
+    }
   };
 
   const formatWorkshopDate = (dateString) => {
@@ -44,7 +62,7 @@ const Workshops = () => {
       <h2>Upcoming Workshops</h2>
       <ul className={styles.eventsWorkshopsList}>
         {workshopsData.map((workshop) => (
-          <li key={workshop.id} className={styles.eventWorkshopItem}>
+          <li key={workshop.workshopID} className={styles.eventWorkshopItem}>
             <h3>{workshop.name}</h3>
             <p>{workshop.desc}</p>
             <p>Shelter Name: {workshop.shelter_name}</p>
@@ -56,8 +74,9 @@ const Workshops = () => {
                 <label>
                   <input
                     type="checkbox"
-                    checked={attendanceStatus[workshop.id]}
-                    onChange={() => toggleAttendanceStatus(workshop.id)}
+                    checked={attendanceStatus[workshop.workshopID]}
+                    onChange={() => attendWorkshop(workshop.workshopID)}
+                    disabled={attendanceStatus[workshop.workshopID]}
                   />
                   Yes
                 </label>

@@ -28,7 +28,7 @@ const Cart = () => {
           totalCost: cartData.totalCost,
         });
 
-        console.log("Data: ", cartData);
+        console.log("Cart Data: ", cartData);
       } catch (error) {
         console.error("Error fetching cart data:", error);
       }

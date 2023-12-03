@@ -13,19 +13,28 @@ const pool = mysql.createPool({
 });
 
 export default async function handler(req, res) {
+  const { memberID } = req.query;
+  console.log("api/workshop memberID: ", memberID);
   try {
     // Get a connection from the pool
     const connection = await pool.getConnection();
 
     // Execute the query
-    const [rows] = await connection.execute(`
-      SELECT workshops.*, shelters.location AS shelter_location, shelters.name AS shelter_name
-      FROM workshops
-      JOIN shelters ON workshops.WS_FK = shelters.shelterID
-    `);
+    const [rows] = await connection.execute(
+      `
+    SELECT workshops.*, shelters.location AS shelter_location, shelters.name AS shelter_name
+    FROM workshops
+    JOIN shelters ON workshops.WS_FK = shelters.shelterID
+    LEFT JOIN attendworkshop ON workshops.workshopID = attendworkshop.workshopFK AND attendworkshop.memberFK = ?
+    WHERE attendworkshop.workshopFK IS NULL
+    `,
+      [memberID]
+    );
 
     // Release the connection back to the pool
     connection.release();
+
+    console.log("api/workshop data: ", rows);
 
     // Send the data as JSON response
     res.status(200).json(rows);
