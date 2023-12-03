@@ -1,0 +1,45 @@
+/* styles/UpdateShop.module.css */
+
+.updateEvent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
+      /* display: flex;
+      flex-direction: row; */
+      justify-content: space-between;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input {
+    width: 15%;
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .button {
+    width: 10%;
+    padding: 10px;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .p {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #3498db;
+  }
+  /* Add styles for the "Update Event" and "Delete Event" sections */
+.updateEventSection {
+  width: 100%; /* Adjust the width as needed */
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #ddd; /* Add a border for clarity */
+}
+  

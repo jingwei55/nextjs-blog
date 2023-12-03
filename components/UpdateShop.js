@@ -11,6 +11,7 @@ const UpdateShop = ({ onSubmit }) => {
   const [quantity, setQuantity] = useState("");
   const [shelters, setShelters] = useState([]);
   const [existingItems, setExistingItems] = useState([]); // State for existing items
+  const [newItemName, setNewItemName] = useState("");
   const [selectedShelter, setSelectedShelter] = useState("");
 
   useEffect(() => {
@@ -52,6 +53,12 @@ const UpdateShop = ({ onSubmit }) => {
     setSelectedShelter(selectedShelterId);
   };
 
+  const handleNewItemNameChange = (e) => {
+    const value = e.target.value;
+    setNewItemName(value);
+    handleExistingItemSelect(value);
+  };
+
   const handleSubmit = async () => {
     try {
       // Make a request to the API to add the pet to the database
@@ -61,7 +68,7 @@ const UpdateShop = ({ onSubmit }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
+          name: name || newItemName,
           price,
           item_type: itemType,
           quantity,
@@ -107,14 +114,29 @@ const UpdateShop = ({ onSubmit }) => {
           placeholder="Insert Item Name"
         >
           {/* Mapping over existing items to create options */}
-          {existingItems.map((existingItem) => (
-            <option key={existingItem.itemID} value={existingItem.name}>
-              {existingItem.name}
-            </option>
-          ))}
+          {[...new Set(existingItems.map((item) => item.name))].map(
+            (uniqueName) => (
+              <option key={uniqueName} value={uniqueName}>
+                {uniqueName}
+              </option>
+            )
+          )}
           {/* Option to add a new item */}
           <option value="">Add New Item</option>
         </select>
+        {/* Render input field for new event name when "Add New Event" is selected */}
+        {name === "" && (
+          <div>
+            <label className={styles.label}>New Item Name:</label>
+            <input
+              className={styles.input}
+              type="text"
+              value={newItemName}
+              onChange={handleNewItemNameChange}
+              placeholder="Insert New Item Name"
+            />
+          </div>
+        )}
       </div>
       <div>
         <label className={styles.label}>Price:</label>
@@ -173,117 +195,3 @@ const UpdateShop = ({ onSubmit }) => {
 };
 
 export default UpdateShop;
-
-// // Import React, useState, and useEffect
-// import React, { useState, useEffect } from 'react';
-// import styles from '../styles/UpdateShop.module.css'; // Import the CSS module
-
-// const UpdateShop = () => {
-//   // State variables for form inputs
-//   const [name, setName] = useState('');
-//   const [price, setPrice] = useState('');
-//   const [itemType, setItemType] = useState('');
-//   const [quantity, setQuantity] = useState('');
-//   const [shelterID, setShelterID] = useState('');
-//   const [existingItems, setExistingItems] = useState([]); // State for existing items
-
-//   // Fetch existing items from the database on component mount
-//   useEffect(() => {
-//     // Perform the API call to fetch existing items and update the state
-//     // Replace the following with your actual API endpoint
-//     fetch('/api/existingItems')
-//       .then((response) => response.json())
-//       .then((data) => setExistingItems(data))
-//       .catch((error) => console.error('Error fetching existing items:', error));
-//   }, []);
-
-//   // Function to handle selection of an existing item
-//   const handleExistingItemSelect = (selectedItemName) => {
-//     // Find the selected item in the existing items array
-//     const selectedItem = existingItems.find((item) => item.name === selectedItemName);
-
-//     // Update the state with the details of the selected item
-//     if (selectedItem) {
-//       setName(selectedItem.name);
-//       setPrice(selectedItem.price);
-//       setItemType(selectedItem.itemType);
-//       setQuantity(selectedItem.quantity);
-//       setShelterID(selectedItem.shelterID);
-//     }
-//   };
-
-//   // Function to handle form submission
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Perform the necessary logic for updating the item in the database
-//     // You can use API calls, state management, or other appropriate methods
-//     console.log('Form submitted:', { name, price, itemType, quantity, shelterID });
-//     // Add logic for updating the item in the database
-//   };
-
-//   return (
-//     <div className={styles.updateShop}>
-//       <h2>Update Shop Item</h2>
-//       <form onSubmit={handleSubmit}>
-//         {/* Dropdown to select existing items */}
-//         <label className={styles.label}>Select or Add Item:</label>
-//         <select
-//           className={styles.input}
-//           value={name}
-//           onChange={(e) => {
-//             setName(e.target.value);
-//             handleExistingItemSelect(e.target.value);
-//           }}
-//         >
-//           {/* Mapping over existing items to create options */}
-//           {existingItems.map((existingItem) => (
-//             <option key={existingItem.itemId} value={existingItem.name}>
-//               {existingItem.name}
-//             </option>
-//           ))}
-//           {/* Option to add a new item */}
-//           <option value="">Add New Item</option>
-//         </select>
-
-//         {/* Additional input fields for other item details */}
-//         <label className={styles.label}>Price:</label>
-//         <input
-//           className={styles.input}
-//           type="text"
-//           value={price}
-//           onChange={(e) => setPrice(e.target.value)}
-//         />
-
-//         <label className={styles.label}>Item Type:</label>
-//         <input
-//           className={styles.input}
-//           type="text"
-//           value={itemType}
-//           onChange={(e) => setItemType(e.target.value)}
-//         />
-
-//         <label className={styles.label}>Quantity:</label>
-//         <input
-//           className={styles.input}
-//           type="text"
-//           value={quantity}
-//           onChange={(e) => setQuantity(e.target.value)}
-//         />
-
-//         <label className={styles.label}>Shelter ID:</label>
-//         <input
-//           className={styles.input}
-//           type="text"
-//           value={shelterID}
-//           onChange={(e) => setShelterID(e.target.value)}
-//         />
-
-//         <button className={styles.button} type="submit">
-//           Update Item
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default UpdateShop;
