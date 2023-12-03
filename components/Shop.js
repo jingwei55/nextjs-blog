@@ -15,6 +15,7 @@ const Shop = () => {
         const response = await fetch("/api/shop");
         const data = await response.json();
         setItemsData(data);
+        console.log("Current userID: ", userID);
       } catch (error) {
         console.error("Error fetching shop data:", error);
       }
@@ -33,7 +34,7 @@ const Shop = () => {
   const handleAddToCart = async (itemId, quantity) => {
     console.log("MemberID: ", isLoggedIn, role, userID);
     try {
-      if (!memberID) {
+      if (!userID) {
         setError("Please log in to add items to the cart.");
         return;
       }
@@ -41,7 +42,7 @@ const Shop = () => {
       // Make a request to the API to add the item to the cart
       //cartID same as memberID
       await axios.post("/api/addToCart", {
-        memberID,
+        userID,
         itemId,
         quantity,
       });
