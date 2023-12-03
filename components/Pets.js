@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Pets.module.css"; // Import the CSS module
 import { useAuth } from "../context/AuthContext"; // Import the AuthContext
+import axios from "axios";
 
 const Pets = () => {
-  const { isLoggedIn, role } = useAuth(); // Access the isLoggedIn state from AuthContext
+  const { isLoggedIn, role, userID } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
@@ -15,6 +16,8 @@ const Pets = () => {
       .catch((error) => console.error("Error fetching pets:", error));
   }, []);
 
+  console.log("Pets Data: ", pets);
+
   // State to manage adoption status for each pet
   const [adoptionStatus, setAdoptionStatus] = useState({});
 
@@ -24,6 +27,19 @@ const Pets = () => {
       ...prevStatus,
       [petId]: !prevStatus[petId],
     }));
+  };
+
+  const adoptPet = async (petId) => {
+    try {
+      // Send a request to the API to link the memberID with the petID
+      await axios.post("/api/adopt", { memberID: userID, petID: petId });
+
+      // Update the adoption status locally
+      toggleAdoptStatus(petId);
+      window.alert("Pet successfully adopted!");
+    } catch (error) {
+      console.error("Error adopting pet:", error);
+    }
   };
 
   return (
@@ -44,7 +60,8 @@ const Pets = () => {
                   <input
                     type="checkbox"
                     checked={adoptionStatus[pet.petID]}
-                    onChange={() => toggleAdoptStatus(pet.petID)}
+                    onChange={() => adoptPet(pet.petID)}
+                    disabled={adoptionStatus[pet.petID]}
                   />
                   Yes
                 </label>

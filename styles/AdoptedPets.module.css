@@ -1,0 +1,41 @@
+/* styles/AdoptedPets.module.css */
+.adoptedPetsContainer {
+    margin: 20px;
+}
+
+.adoptedPetList {
+    list-style: none;
+    padding: 0;
+}
+
+.adoptedPetItem {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.adoptedPetName {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.adoptedPetDescription {
+    margin-top: 5px;
+    color: #555;
+}
+
+/* You can adjust the styles based on your specific design */
+.adoptedPetImage {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+.button {
+    width: 10%;
+    padding: 10px;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+  }

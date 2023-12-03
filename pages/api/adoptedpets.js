@@ -1,7 +1,6 @@
-// pages/api/pets.js
+// api/adoptedpets.js
 import mysql from "mysql2/promise";
 
-// Configure your MySQL connection
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -13,28 +12,32 @@ const pool = mysql.createPool({
 });
 
 export default async function handler(req, res) {
+  const { memberID } = req.query;
+
   try {
-    // Get a connection from the pool
     const connection = await pool.getConnection();
 
-    // Execute the query
-    // const [rows] = await connection.execute("SELECT * FROM pets");
-    const [rows] = await connection.execute(`
+    // Fetch adopted pets data from the adoptions table based on memberID
+    const [rows] = await connection.execute(
+      `
       SELECT pets.*, shelters.location AS shelter_location, shelters.name AS shelter_name
       FROM pets
       JOIN shelters ON pets.PS_FK = shelters.shelterID
-      WHERE pets.PM_FK IS NULL
-    `);
+      WHERE pets.PM_FK = ?
+    `,
+      [memberID]
+    );
 
-    // Release the connection back to the pool
     connection.release();
 
-    // console.log("api/pets Data: ", rows);
+    console.log("api/adoptedpets Data: ", rows);
 
-    // Send the data as JSON response
-    res.status(200).json(rows);
+    // Respond with the adopted pets data
+    res.status(200).json({
+      adoptedPets: rows,
+    });
   } catch (error) {
-    console.error("Error fetching pets:", error);
+    console.error("Error fetching adopted pets data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 }

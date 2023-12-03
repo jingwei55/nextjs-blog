@@ -56,7 +56,9 @@ const Navbar = () => {
               <div className={styles.viewDetailsOptions}>
                 <Link href="/cart">View Shopping Cart</Link>
                 <Link href="/surrenderpet">Surrender a Pet</Link>
-                <Link href="/activities">Activities</Link>
+                <Link href="/adoptpet">Adopted Pets</Link>
+                <Link href="/attendevent">Events To Attend</Link>
+                <Link href="/attendworkshop">Workshops To Attend</Link>
               </div>
             )}
           </div>
