@@ -48,7 +48,7 @@ const pool = mysql.createPool({
 
 export default async function handler(req, res) {
   const { memberID } = req.query;
-  console.log("MemberID api/cart: ", memberID);
+  // console.log("MemberID api/cart: ", memberID);
   try {
     const connection = await pool.getConnection();
 

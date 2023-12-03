@@ -57,10 +57,16 @@ const Cart = () => {
     }
   };
 
-  // const handlePurchase = async () => {
-  //   // Add logic for completing the purchase, e.g., calling a payment API
-  //   console.log("Purchase logic goes here");
-  // };
+  const handlePurchase = async () => {
+    try {
+      await axios.post("/api/purchase"); // Make a request to your server to handle the purchase logic
+
+      // Display an alert indicating successful purchase
+      window.alert("Purchase successful! Your cart has been cleared.");
+    } catch (error) {
+      console.error("Error making a purchase:", error);
+    }
+  };
 
   return (
     <div className={styles.cartContainer}>
@@ -112,7 +118,7 @@ const Cart = () => {
               Total Items: {cart.totalItems}
             </span>
           </div>
-          {/* <button onClick={handlePurchase}>Purchase</button> */}
+          <button onClick={handlePurchase}>Purchase</button>
         </>
       ) : (
         <p>Shopping Cart is empty</p>

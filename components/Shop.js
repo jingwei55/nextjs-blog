@@ -51,7 +51,7 @@ const Shop = () => {
         `Item ${itemId} added to cart with quantity: ${quantities[itemId] || 0}`
       );
       window.alert(
-        `${itemId} item(s) has been added to cart! Revisit page to see changes`
+        `${quantities[itemId]} item(s) has been added to cart! Revisit page to see changes`
       );
       // fetchShopData();
 

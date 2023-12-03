@@ -29,9 +29,12 @@ export default async function handler(req, res) {
         [quantity, itemId]
       );
 
+      console.log("item table updated (reduce quantity)");
+
       if (updateItemResult.affectedRows === 0) {
         // If no rows were updated, handle the case where the item doesn't exist
         await pool.query("ROLLBACK"); // Rollback the transaction
+        console.log("Item not found.");
         return res.status(404).json({ error: "Item not found." });
       }
 
@@ -44,7 +47,11 @@ export default async function handler(req, res) {
         [quantity, userID, itemId]
       );
 
-      if (updateCartResult.affectedRows === 0) {
+      console.log("Attempted to update existing quantity");
+      // console.log("updated Cart result:", updateCartResult[0]);
+      // console.log("Check affected rows: ", updateCartResult[0].affectedRows);
+
+      if (updateCartResult[0].affectedRows === 0) {
         // If no rows were updated, it means the combination doesn't exist, so insert a new row
         const insertCartResult = await pool.query(
           `
@@ -54,9 +61,12 @@ export default async function handler(req, res) {
           [userID, itemId, quantity]
         );
 
+        console.log("New entry in cartitems since no existing row");
+
         if (insertCartResult.affectedRows === 0) {
           // If no rows were inserted, handle the failure
           await pool.query("ROLLBACK"); // Rollback the transaction
+          console.log("Failed to add item to cart.");
           return res.status(500).json({ error: "Failed to add item to cart." });
         }
       }
