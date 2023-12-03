@@ -14,6 +14,7 @@ const Shop = () => {
       try {
         const response = await fetch("/api/shop");
         const data = await response.json();
+        console.log("Data: ", data); // Corrected logging statement
         setItemsData(data);
         console.log("Current userID: ", userID);
       } catch (error) {
