@@ -14,7 +14,6 @@ const Shop = () => {
       try {
         const response = await fetch("/api/shop");
         const data = await response.json();
-        console.log("Data: ", data); // Corrected logging statement
         setItemsData(data);
         console.log("Shop data: ", data);
         console.log("Current userID: ", userID);
@@ -74,6 +73,8 @@ const Shop = () => {
     acc[item.item_type].push(item);
     return acc;
   }, {});
+
+  console.log("Grouped Items", groupedItems);
 
   return (
     <div className={styles.shopContainer}>
