@@ -56,6 +56,24 @@ const Navbar = () => {
               <div className={styles.viewDetailsOptions}>
                 <Link href="/cart">View Shopping Cart</Link>
                 <Link href="/surrenderpet">Surrender a Pet</Link>
+                <Link href="/activities">Activities</Link>
+              </div>
+            )}
+          </div>
+        )}
+        {isLoggedIn && role === "employee" && (
+          <div
+            className={`${styles.viewDetails} ${
+              viewDetailsOpen && styles.active
+            }`}
+            onClick={toggleViewDetails}
+          >
+            <button className={styles.viewDetailsButton}>View Details</button>
+            {viewDetailsOpen && (
+              <div className={styles.viewDetailsOptions}>
+                <Link href="/updateshop">Update Shop</Link>
+                <Link href="/updateevent">Update Events</Link>
+                <Link href="/updateworkshop">Update Workshops</Link>
               </div>
             )}
           </div>

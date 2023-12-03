@@ -16,6 +16,7 @@ const Shop = () => {
         const data = await response.json();
         console.log("Data: ", data); // Corrected logging statement
         setItemsData(data);
+        console.log("Shop data: ", data);
         console.log("Current userID: ", userID);
       } catch (error) {
         console.error("Error fetching shop data:", error);

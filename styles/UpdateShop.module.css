@@ -1,28 +1,23 @@
-/* styles/petTypeDropdown.css */
+/* styles/UpdateShop.module.css */
 
-.petTypeDropdown {
+.updateShop {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 20px;
-}
+  }
+  
   .label {
     display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
   
   .input {
     width: 15%;
-  padding: 8px;
-  margin-bottom: 15px;
-  /* font-size: 16px; */
+    padding: 8px;
+    margin-bottom: 15px;
   }
-
-  .inputLarge {
-    width: 80%;
-  }
-  
   
   .button {
     width: 10%;
@@ -33,9 +28,8 @@
   }
   
   .p {
-    
     margin-top: 15px;
-        font-weight: bold;
-        color: #3498db;
+    font-weight: bold;
+    color: #3498db;
   }
   

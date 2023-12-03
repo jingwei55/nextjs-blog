@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 const SurrenderPetPage = () => {
   const handleSurrenderSubmission = () => {
     // Handle any post-submission logic here
-    // For example, you might want to redirect the user or update the UI
+    window.alert("Pet surrendered!");
     console.log("Pet surrendered. Additional logic can be added here.");
   };
 
