@@ -7,6 +7,7 @@ import styles from "../styles/Cart.module.css";
 
 const Cart = () => {
   const { isLoggedIn, role, userID } = useAuth();
+  const [removeQuantity, setRemoveQuantity] = useState(1);
   console.log("UserID Cart: ", userID);
   const [cart, setCart] = useState({
     items: [],
@@ -36,15 +37,25 @@ const Cart = () => {
     fetchCartData();
   }, [userID]);
 
-  // const handleRemoveItem = async (itemID) => {
-  //   try {
-  //     await axios.delete(`/api/cart?itemID=${itemID}`);
-  //     const response = await axios.get(`/api/cart?memberID=${memberID}`);
-  //     setCart(response.data);
-  //   } catch (error) {
-  //     console.error("Error removing item from cart:", error);
-  //   }
-  // };
+  const handleRemoveItem = async (itemID) => {
+    try {
+      console.log("Data sent to api: ", userID, itemID, removeQuantity);
+      // Make a request to the API to remove items from the cart
+      await axios.post("/api/removeFromCart", {
+        userID,
+        itemID,
+        quantity: removeQuantity,
+      });
+
+      // Fetch updated cart items data
+      // fetchCartData();
+      window.alert(
+        `Successfully removed ${removeQuantity} item(s) from the cart! Revisit page to see changes`
+      );
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
 
   // const handlePurchase = async () => {
   //   // Add logic for completing the purchase, e.g., calling a payment API
@@ -66,7 +77,25 @@ const Cart = () => {
                 <span className={styles.itemPrice}>
                   Price: ${parseFloat(cartItem.price).toFixed(2)}
                 </span>
-                <button onClick={() => handleRemoveItem(cartItem.itemID)}>
+                <select
+                  value={removeQuantity}
+                  onChange={(e) => setRemoveQuantity(Number(e.target.value))}
+                >
+                  {/* You can generate options based on available quantity */}
+                  {Array.from(
+                    { length: cartItem.item_quantity + 1 },
+                    (_, index) => (
+                      <option key={index} value={index}>
+                        {index}
+                      </option>
+                    )
+                  )}
+                </select>
+                <button
+                  onClick={() =>
+                    handleRemoveItem(userID, cartItem.itemID, removeQuantity)
+                  }
+                >
                   Remove
                 </button>
               </li>

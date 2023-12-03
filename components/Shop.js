@@ -50,6 +50,10 @@ const Shop = () => {
       console.log(
         `Item ${itemId} added to cart with quantity: ${quantities[itemId] || 0}`
       );
+      window.alert(
+        `${itemId} item(s) has been added to cart! Revisit page to see changes`
+      );
+      // fetchShopData();
 
       // Reset quantity for the specific item after adding to the cart
       setQuantities((prevQuantities) => ({

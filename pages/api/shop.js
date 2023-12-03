@@ -26,7 +26,6 @@ export default async function handler(req, res) {
 
     // Release the connection back to the pool
     connection.release();
-    console.log("Shop data: ", rows);
 
     // Send the data as JSON response
     res.status(200).json(rows);
