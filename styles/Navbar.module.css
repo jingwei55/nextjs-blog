@@ -10,6 +10,8 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Courier New', Courier, monospace; /* Replace 'Your Chosen Font' with your preferred font-family */
   font-size: 16px; /* Adjust the font size as needed */
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .logo img {
@@ -18,7 +20,7 @@
 
 .navLinks {
   display: flex;
-  gap: 20px;
+  gap: 60px;
 }
 
 .navLinks a {
@@ -27,8 +29,9 @@
   font-weight: bold;
   font-size: 18px;
   transition: color 0.3s ease-in-out;
-  padding-top: 15px;
+  /* padding-top: 10px; */
   padding-left: 20px;
+  /* padding-bottom: 10px; */
 }
 
 .navLinks a:hover {
@@ -52,7 +55,8 @@
 
 .logout {
   font-family: 'Courier New', Courier, monospace;
-  padding-top: 15px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
 }
 
 .viewDetails {
@@ -64,8 +68,8 @@
   color: #fff;
   text-decoration: none;
   background-color: #e74c3c; /* Different color for the "View Details" button */
-  padding: 8px;
-  padding-right: 20px;
+  /* padding: 8px; */
+  padding-right: 60px;
   padding-left: 20px;
   border-radius: 10px;
   text-align: center;
@@ -73,7 +77,8 @@
   font-weight: bold;
   font-size: 16px;
   font-family: 'Courier New', Courier, monospace;
-  padding-top: 15px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
 }
 
 /* .viewDetailsButton:hover { */
@@ -88,7 +93,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 250px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: none;
