@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  const { memberID, workshopID } = req.body;
+  const { memberID, eventID } = req.body;
 
   try {
     const connection = await pool.getConnection();
@@ -25,14 +25,14 @@ export default async function handler(req, res) {
       // Begin a transaction to ensure atomicity
       await connection.beginTransaction();
 
-      // Update the attendance status for the specified workshop
+      // Update the attendance status for the specified event
       await connection.execute(
         `
-        DELETE FROM attendworkshop
-        WHERE workshopFK = ?
+        DELETE FROM attendevent
+        WHERE eventFK = ?
         AND memberFK = ?
         `,
-        [workshopID, memberID]
+        [eventID, memberID]
       );
 
       // Commit the transaction if everything is successful
