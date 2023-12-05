@@ -1,38 +1,22 @@
-// pages/api/pets.js
-import mysql from "mysql2/promise";
-
-// Configure your MySQL connection
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+// pages/api/workshop.js
+import query from "../../lib/query";
 
 export default async function handler(req, res) {
   const { memberID } = req.query;
   console.log("api/workshop memberID: ", memberID);
-  try {
-    // Get a connection from the pool
-    const connection = await pool.getConnection();
 
-    // Execute the query
-    const [rows] = await connection.execute(
+  try {
+    // Start the query
+    const rows = await query(
       `
-    SELECT workshops.*, shelters.location AS shelter_location, shelters.name AS shelter_name
-    FROM workshops
-    JOIN shelters ON workshops.WS_FK = shelters.shelterID
-    LEFT JOIN attendworkshop ON workshops.workshopID = attendworkshop.workshopFK AND attendworkshop.memberFK = ?
-    WHERE attendworkshop.workshopFK IS NULL
-    `,
+      SELECT workshops.*, shelters.location AS shelter_location, shelters.name AS shelter_name
+      FROM workshops
+      JOIN shelters ON workshops.WS_FK = shelters.shelterID
+      LEFT JOIN attendworkshop ON workshops.workshopID = attendworkshop.workshopFK AND attendworkshop.memberFK = ?
+      WHERE attendworkshop.workshopFK IS NULL
+      `,
       [memberID]
     );
-
-    // Release the connection back to the pool
-    connection.release();
 
     console.log("api/workshop data: ", rows);
 

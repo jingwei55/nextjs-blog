@@ -1,25 +1,10 @@
-import mysql from "mysql2/promise";
+// pages/api/shelter.js
 
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(_, res) {
   try {
-    const connection = await pool.getConnection();
-
-    // Execute the query to fetch shelter names
-    const [rows] = await connection.execute(
-      "SELECT shelterID, name FROM shelters"
-    );
-
-    connection.release();
+    const rows = await query("SELECT shelterID, name FROM shelters");
 
     res.status(200).json(rows);
   } catch (error) {
