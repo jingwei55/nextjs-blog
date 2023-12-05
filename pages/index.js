@@ -2,7 +2,7 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 
 const Home = () => {
   return (
