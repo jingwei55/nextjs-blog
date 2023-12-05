@@ -8,6 +8,8 @@ const Pets = () => {
   const { isLoggedIn, role, userID } = useAuth(); // Access the isLoggedIn state from AuthContext
   const [pets, setPets] = useState([]);
 
+  console.log("Current userID and role: ", userID, role);
+
   useEffect(() => {
     // Fetch data from the API endpoint
     fetch("/api/pets")

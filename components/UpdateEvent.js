@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "../styles/UpdateEvent.module.css"; // Import the CSS module
+import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const UpdateEvent = ({ onSubmit }) => {
+  const { userID } = useAuth();
   // State variables for form inputs
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -57,7 +59,7 @@ const UpdateEvent = ({ onSubmit }) => {
 
   useEffect(() => {
     // Fetch shelter data from the API endpoint
-    fetch("/api/event")
+    fetch(`/api/event?memberID=${userID}`)
       .then((response) => response.json())
       .then((data) => setExistingEvents(data))
       .catch((error) => console.error("Error fetching shelters:", error));

@@ -9,6 +9,8 @@ const Workshops = () => {
   const [workshopsData, setWorkshopsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
+  console.log("Current userID and role: ", userID, role);
+
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {

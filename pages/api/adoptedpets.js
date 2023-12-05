@@ -1,24 +1,12 @@
 // api/adoptedpets.js
-import mysql from "mysql2/promise";
-
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(req, res) {
   const { memberID } = req.query;
 
   try {
-    const connection = await pool.getConnection();
-
     // Fetch adopted pets data from the adoptions table based on memberID
-    const [rows] = await connection.execute(
+    const rows = await query(
       `
       SELECT pets.*, shelters.location AS shelter_location, shelters.name AS shelter_name
       FROM pets
@@ -27,10 +15,6 @@ export default async function handler(req, res) {
     `,
       [memberID]
     );
-
-    connection.release();
-
-    // console.log("api/adoptedpets Data: ", rows);
 
     // Respond with the adopted pets data
     res.status(200).json({

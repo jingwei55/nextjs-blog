@@ -1,15 +1,5 @@
 // api/cancelevent.js
-import mysql from "mysql2/promise";
-
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -19,14 +9,12 @@ export default async function handler(req, res) {
   const { memberID, workshopID } = req.body;
 
   try {
-    const connection = await pool.getConnection();
+    // Begin a transaction to ensure atomicity
+    await query("BEGIN");
 
     try {
-      // Begin a transaction to ensure atomicity
-      await connection.beginTransaction();
-
       // Update the attendance status for the specified workshop
-      await connection.execute(
+      await query(
         `
         DELETE FROM attendworkshop
         WHERE workshopFK = ?
@@ -36,14 +24,12 @@ export default async function handler(req, res) {
       );
 
       // Commit the transaction if everything is successful
-      await connection.commit();
-
-      connection.release();
+      await query("COMMIT");
 
       res.status(200).json({ success: true });
     } catch (error) {
       // Rollback the transaction in case of any error
-      await connection.rollback();
+      await query("ROLLBACK");
 
       throw error; // Re-throw the error for the outer catch block
     }

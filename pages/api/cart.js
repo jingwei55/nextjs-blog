@@ -1,36 +1,24 @@
 // pages/api/cart.js
-
-import mysql from "mysql2/promise";
-
-// Configure your MySQL connection
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(req, res) {
   const { memberID } = req.query;
-  // console.log("MemberID api/cart: ", memberID);
+  console.log("MemberID api/cart: ", memberID);
   try {
-    const connection = await pool.getConnection();
-
     // Fetch cart data from the cartitems table based on memberID
-    const [rows] = await connection.execute(
+    const rows = await query(
       `
-      SELECT items.name, items.price, cartitems.item_quantity
+      SELECT items.ItemID, items.name, items.price, cartitems.item_quantity, shelters.location AS shelter_location, shelters.name AS shelter_name
       FROM cartitems
       JOIN items ON cartitems.itemFK = items.itemID
+      JOIN shelters ON items.IS_FK = shelters.shelterID
       WHERE cartFK = ?
       `,
       [memberID]
     );
 
-    connection.release();
+    // console.log("Cart data: ", rows);
+
     // Calculate totalCost and totalItems based on the fetched data
     const totalItems = rows.reduce((acc, row) => acc + row.item_quantity, 0);
 

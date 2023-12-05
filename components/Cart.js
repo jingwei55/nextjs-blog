@@ -20,15 +20,12 @@ const Cart = () => {
       try {
         const response = await axios.get(`/api/cart?memberID=${userID}`);
         const cartData = response.data;
-        const { rows } = cartData;
 
         setCart({
           items: cartData.rows,
           totalItems: cartData.totalItems,
           totalCost: cartData.totalCost,
         });
-
-        console.log("Cart Data: ", cartData);
       } catch (error) {
         console.error("Error fetching cart data:", error);
       }
@@ -37,9 +34,11 @@ const Cart = () => {
     fetchCartData();
   }, [userID]);
 
+  // console.log("Cart Data: ", cart);
+
   const handleRemoveItem = async (itemID) => {
+    console.log("Data sent to api: ", userID, itemID, removeQuantity);
     try {
-      console.log("Data sent to api: ", userID, itemID, removeQuantity);
       // Make a request to the API to remove items from the cart
       await axios.post("/api/removeFromCart", {
         userID,
@@ -47,8 +46,15 @@ const Cart = () => {
         quantity: removeQuantity,
       });
 
-      // Fetch updated cart items data
-      // fetchCartData();
+      const response = await axios.get(`/api/cart?memberID=${userID}`);
+      const cartData = response.data;
+
+      // Update local state to reflect the changes in the cart
+      setCart({
+        items: cartData.rows,
+        totalItems: cartData.totalItems,
+        totalCost: cartData.totalCost,
+      });
       window.alert(
         `Successfully removed ${removeQuantity} item(s) from the cart! Revisit page to see changes`
       );
@@ -59,7 +65,15 @@ const Cart = () => {
 
   const handlePurchase = async () => {
     try {
-      await axios.post("/api/purchase"); // Make a request to your server to handle the purchase logic
+      await axios.post(`/api/purchase?userID=${userID}`); // Make a request to your server to handle the purchase logic
+
+      // Update local state to reflect the cleared cart
+      setCart((prevCart) => ({
+        ...prevCart,
+        items: [], // Clear the items array
+        totalItems: 0,
+        totalCost: 0,
+      }));
 
       // Display an alert indicating successful purchase
       window.alert("Purchase successful! Your cart has been cleared.");
@@ -75,8 +89,10 @@ const Cart = () => {
         <>
           <ul className={styles.cartList}>
             {cart.items.map((cartItem) => (
-              <li className={styles.cartItem} key={cartItem.itemID}>
+              <li className={styles.cartItem} key={cartItem.ItemID}>
                 <span className={styles.itemName}>{cartItem.name}</span>
+                <p>Shelter Name: {cartItem.shelter_name}</p>
+                <p>Shelter Location: {cartItem.shelter_location}</p>
                 <span className={styles.itemQuantity}>
                   Quantity: {cartItem.item_quantity}
                 </span>
@@ -97,11 +113,7 @@ const Cart = () => {
                     )
                   )}
                 </select>
-                <button
-                  onClick={() =>
-                    handleRemoveItem(userID, cartItem.itemID, removeQuantity)
-                  }
-                >
+                <button onClick={() => handleRemoveItem(cartItem.ItemID)}>
                   Remove
                 </button>
               </li>

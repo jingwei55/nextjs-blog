@@ -9,6 +9,8 @@ const Shop = () => {
   const [quantities, setQuantities] = useState({});
   const [error, setError] = useState(null);
 
+  console.log("Current userID and role: ", userID, role);
+
   useEffect(() => {
     const fetchShopData = async () => {
       try {
@@ -47,19 +49,15 @@ const Shop = () => {
         itemId,
         quantity,
       });
+
       console.log(
         `Item ${itemId} added to cart with quantity: ${quantities[itemId] || 0}`
       );
       window.alert(
         `${quantities[itemId]} item(s) has been added to cart! Revisit page to see changes`
       );
-      // fetchShopData();
 
-      // Reset quantity for the specific item after adding to the cart
-      setQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [itemId]: 0,
-      }));
+      fetchShopData();
     } catch (error) {
       console.error("Error adding item to cart:", error);
       setError("Error adding item to cart.");

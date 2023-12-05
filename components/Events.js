@@ -9,6 +9,8 @@ const Events = () => {
   const [eventsData, setEventsData] = useState([]);
   const [attendanceStatus, setAttendanceStatus] = useState({});
 
+  console.log("Current userID and role: ", userID, role);
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {

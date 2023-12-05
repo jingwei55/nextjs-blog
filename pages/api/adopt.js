@@ -1,15 +1,5 @@
 // api/adopt.js
-import mysql from "mysql2/promise";
-
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -19,10 +9,8 @@ export default async function handler(req, res) {
   const { memberID, petID } = req.body;
 
   try {
-    const connection = await pool.getConnection();
-
-    // Insert a new record into the adoptions table to link the memberID with the petID
-    await connection.execute(
+    // Update the pets table to link the memberID with the petID
+    await query(
       `
       UPDATE pets
       SET PM_FK = ?
@@ -30,8 +18,6 @@ export default async function handler(req, res) {
       `,
       [memberID, petID]
     );
-
-    connection.release();
 
     res.status(200).json({ success: true });
   } catch (error) {

@@ -1,25 +1,13 @@
-import mysql from "mysql2/promise";
+//api/items.js
 
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "adoptionwebsite",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+import query from "../../lib/query";
 
 export default async function handler(_, res) {
   try {
-    const connection = await pool.getConnection();
-
-    // Execute the query to fetch shelter names
-    const [rows] = await connection.execute(
+    // Start the query to fetch shelter names
+    const rows = await query(
       "SELECT itemID, name, price, item_type, quantity FROM items"
     );
-
-    connection.release();
 
     res.status(200).json(rows);
   } catch (error) {

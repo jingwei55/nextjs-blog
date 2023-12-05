@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "../styles/UpdateEvent.module.css"; // Import the CSS module
+import { useAuth } from "../context/AuthContext"; // Import the AuthContext
 
 const UpdateWorkshop = ({ onSubmit }) => {
+  const { userID } = useAuth();
   // State variables for form inputs
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
@@ -57,7 +59,7 @@ const UpdateWorkshop = ({ onSubmit }) => {
 
   useEffect(() => {
     // Fetch shelter data from the API endpoint
-    fetch("/api/workshop")
+    fetch(`/api/workshop?memberID=${userID}`)
       .then((response) => response.json())
       .then((data) => setExistingWorkshops(data))
       .catch((error) => console.error("Error fetching shelters:", error));
@@ -118,7 +120,7 @@ const UpdateWorkshop = ({ onSubmit }) => {
       // Update the list of valid shelters based on the selected Workshop
       setValidShelters(
         shelters.filter(
-          (shelter) => shelter.shelterID === selectedWorkshop.ES_FK
+          (shelter) => shelter.shelterID === selectedWorkshop.WS_FK
         )
       );
     }
