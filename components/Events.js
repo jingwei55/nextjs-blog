@@ -17,7 +17,7 @@ const Events = () => {
         const response = await fetch(`/api/event?memberID=${userID}`);
         const data = await response.json();
         setEventsData(data);
-        console.log("Event data: ", eventsData);
+        // console.log("Event data: ", eventsData);
       } catch (error) {
         console.error("Error fetching events:", error);
       }

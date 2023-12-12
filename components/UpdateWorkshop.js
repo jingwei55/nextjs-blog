@@ -64,8 +64,8 @@ const UpdateWorkshop = ({ onSubmit }) => {
       .then((data) => setExistingWorkshops(data))
       .catch((error) => console.error("Error fetching shelters:", error));
   }, []);
-  console.log("shelter Data:", shelters);
-  console.log("Workshop Data:", existingWorkshops);
+  // console.log("shelter Data:", shelters);
+  // console.log("Workshop Data:", existingWorkshops);
 
   // Function to handle selection of an existing Workshop
   const handleExistingWorkshopSelect = (selectedWorkshopName) => {
@@ -144,7 +144,7 @@ const UpdateWorkshop = ({ onSubmit }) => {
 
       if (response.ok) {
         window.alert(`Successfully updated/added Workshop!`);
-        console.log("Workshop added to Workshop successfully");
+        // console.log("Workshop added to Workshop successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 
@@ -179,7 +179,7 @@ const UpdateWorkshop = ({ onSubmit }) => {
 
       if (response.ok) {
         window.alert(`Successfully deleted Workshop!`);
-        console.log("Workshop deleted successfully");
+        // console.log("Workshop deleted successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 

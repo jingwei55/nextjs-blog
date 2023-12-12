@@ -59,8 +59,7 @@ const PetTypeDropdown = ({ onSubmit }) => {
       });
 
       if (response.ok) {
-        window.alert(`Pet surrendered successfully`);
-        console.log("Pet surrendered successfully");
+        // console.log("Pet surrendered successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 

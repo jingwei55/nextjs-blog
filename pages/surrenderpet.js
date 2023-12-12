@@ -7,8 +7,8 @@ import Layout from "../components/Layout";
 const SurrenderPetPage = () => {
   const handleSurrenderSubmission = () => {
     // Handle any post-submission logic here
-    // window.alert("Pet surrendered!");
-    console.log("Pet surrendered. Additional logic can be added here.");
+    window.alert("Pet surrendered!");
+    // console.log("Pet surrendered. Additional logic can be added here.");
   };
 
   return (
@@ -24,11 +24,11 @@ const SurrenderPetPage = () => {
           <form className="add">
             <PetTypeDropdown onSubmit={handleSurrenderSubmission} />
             <div className="picture">
-              <img
+              {/* <img
                 src="../img/surrender-pet.png"
                 alt="Pet Image"
                 style={{ width: "80%", height: "auto" }}
-              />
+              /> */}
             </div>
           </form>
         </main>

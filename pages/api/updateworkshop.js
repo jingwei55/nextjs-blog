@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       [name, shelter]
     );
 
-    console.log("Finding duplicates in the same shelter: ", existingRows);
+    // console.log("Finding duplicates in the same shelter: ", existingRows);
 
     let result;
 
@@ -36,14 +36,14 @@ export default async function handler(req, res) {
           `,
         [desc, formattedDate, name, shelter]
       );
-      console.log(`Updated ${result.affectedRows} rows: `, result);
+      // console.log(`Updated ${result.affectedRows} rows: `, result);
     } else {
       // If no duplicate entry exists, insert a new row
       result = await query(
         "INSERT INTO workshops (name, `desc`, date, WS_FK) VALUES (?, ?, ?, ?)",
         [name, desc, formattedDate, shelter]
       );
-      console.log(`Inserted ${result.affectedRows} row: `, result);
+      // console.log(`Inserted ${result.affectedRows} row: `, result);
     }
 
     res.status(200).json({

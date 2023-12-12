@@ -44,7 +44,7 @@ const Register = () => {
 
       // Add the new user to the employees table
       const res = await axios.post("/api/auth/register", { ...inputs });
-      console.log(res);
+      // console.log(res);
       router.push("/login");
     } catch (err) {
       setError(err.response.data);

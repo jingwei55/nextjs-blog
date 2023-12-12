@@ -18,7 +18,7 @@ const Pets = () => {
       .catch((error) => console.error("Error fetching pets:", error));
   }, []);
 
-  console.log("Pets Data: ", pets);
+  // console.log("Pets Data: ", pets);
 
   // State to manage adoption status for each pet
   const [adoptionStatus, setAdoptionStatus] = useState({});

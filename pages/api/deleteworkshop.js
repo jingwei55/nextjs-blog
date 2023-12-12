@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       [name, shelter]
     );
 
-    console.log(`Deleted ${result.affectedRows} row(s): `, result);
+    // console.log(`Deleted ${result.affectedRows} row(s): `, result);
 
     res.status(200).json({ message: "Workshop deleted successfully" });
   } catch (error) {

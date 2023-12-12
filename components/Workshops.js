@@ -17,7 +17,7 @@ const Workshops = () => {
         const response = await fetch(`/api/workshop?memberID=${userID}`);
         const data = await response.json();
         setWorkshopsData(data);
-        console.log("Workshop data: ", workshopsData);
+        // console.log("Workshop data: ", workshopsData);
       } catch (error) {
         console.error("Error fetching workshops:", error);
       }

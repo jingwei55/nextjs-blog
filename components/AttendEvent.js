@@ -16,7 +16,7 @@ const AttendEvent = () => {
         );
         const eventsData = response.data;
 
-        console.log("Attending Event Data: ", eventsData);
+        // console.log("Attending Event Data: ", eventsData);
 
         setEvents(eventsData);
       } catch (error) {
@@ -46,7 +46,7 @@ const AttendEvent = () => {
     }
   };
 
-  console.log("Attending Events Data: ", events);
+  // console.log("Attending Events Data: ", events);
 
   return (
     <div className={styles.attendEventWorkshopContainer}>

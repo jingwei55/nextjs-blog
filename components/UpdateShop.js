@@ -29,8 +29,8 @@ const UpdateShop = ({ onSubmit }) => {
       .then((data) => setExistingItems(data))
       .catch((error) => console.error("Error fetching shelters:", error));
   }, []);
-  console.log("shelter Data:", shelters);
-  console.log("item Data:", existingItems);
+  // console.log("shelter Data:", shelters);
+  // console.log("item Data:", existingItems);
 
   // Function to handle selection of an existing item
   const handleExistingItemSelect = (selectedItemName) => {
@@ -78,17 +78,17 @@ const UpdateShop = ({ onSubmit }) => {
 
       if (response.ok) {
         window.alert(`Successfully updated/added item!`);
-        console.log("Item added to shop successfully");
+        // console.log("Item added to shop successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 
         // Reset the form fields to their initial values
-        setName("");
         setPrice("");
         setItemType("");
         setQuantity("");
         setSelectedShelter("");
         setNewItemName(""); // Add this line to reset the new item name field
+        setName("");
       } else {
         console.error("Failed add item and update shop:", response.statusText);
         // Handle the error

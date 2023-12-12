@@ -3,12 +3,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import styles from "../styles/Navbar.module.css";
-import Shelter from "./Shelter";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
   const [selectedShelter, setSelectedShelter] = useState(null); // Track the selected shelter
   const { isLoggedIn, logout, role } = useAuth();
+  const router = useRouter(); // Initialize the router
 
   const toggleViewDetails = () => {
     setViewDetailsOpen(!viewDetailsOpen);
@@ -16,6 +17,15 @@ const Navbar = () => {
 
   const handleSelectShelter = (shelterID) => {
     setSelectedShelter(shelterID);
+  };
+
+  const handleLogout = () => {
+    // Perform logout actions (e.g., clear user session)
+    logout();
+
+    // Redirect to the home page
+    router.push("/");
+    window.alert("Logout successful!");
   };
 
   return (
@@ -38,7 +48,7 @@ const Navbar = () => {
           </div>
         </div> */}
         {isLoggedIn ? (
-          <button className={styles.logout} onClick={logout}>
+          <button className={styles.logout} onClick={handleLogout}>
             Logout
           </button>
         ) : (

@@ -37,7 +37,7 @@ const Cart = () => {
   // console.log("Cart Data: ", cart);
 
   const handleRemoveItem = async (itemID) => {
-    console.log("Data sent to api: ", userID, itemID, removeQuantity);
+    // console.log("Data sent to api: ", userID, itemID, removeQuantity);
     try {
       // Make a request to the API to remove items from the cart
       await axios.post("/api/removeFromCart", {

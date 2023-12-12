@@ -39,7 +39,7 @@ const AdoptedPets = () => {
     }
   };
 
-  console.log("Adopted Pets Data: ", adoptedPets);
+  // console.log("Adopted Pets Data: ", adoptedPets);
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);

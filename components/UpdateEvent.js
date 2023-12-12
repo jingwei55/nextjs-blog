@@ -64,8 +64,8 @@ const UpdateEvent = ({ onSubmit }) => {
       .then((data) => setExistingEvents(data))
       .catch((error) => console.error("Error fetching shelters:", error));
   }, []);
-  console.log("shelter Data:", shelters);
-  console.log("Event Data:", existingEvents);
+  // console.log("shelter Data:", shelters);
+  // console.log("Event Data:", existingEvents);
 
   // Function to handle selection of an existing Event
   const handleExistingEventSelect = (selectedEventName) => {
@@ -142,7 +142,7 @@ const UpdateEvent = ({ onSubmit }) => {
 
       if (response.ok) {
         window.alert(`Successfully updated/added Event!`);
-        console.log("Event added to Event successfully");
+        // console.log("Event added to Event successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 
@@ -177,7 +177,7 @@ const UpdateEvent = ({ onSubmit }) => {
 
       if (response.ok) {
         window.alert(`Successfully deleted Event!`);
-        console.log("Event deleted successfully");
+        // console.log("Event deleted successfully");
         // Optionally, you can redirect the user or perform other actions
         onSubmit(); // Notify parent component about the submission
 

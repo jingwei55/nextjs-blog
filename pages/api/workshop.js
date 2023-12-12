@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       [memberID]
     );
 
-    console.log("api/workshop data: ", rows);
+    // console.log("api/workshop data: ", rows);
 
     // Send the data as JSON response
     res.status(200).json(rows);
