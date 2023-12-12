@@ -41,6 +41,10 @@ const AdoptedPets = () => {
 
   console.log("Adopted Pets Data: ", adoptedPets);
 
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <div className={styles.adoptedPetsContainer}>
       <h2>Adopted Pets</h2>
@@ -48,9 +52,10 @@ const AdoptedPets = () => {
         <ul className={styles.adoptedPetList}>
           {adoptedPets.map((pet) => (
             <li key={pet.petID} className={styles.adoptedPetItem}>
-              <h3>{pet.desc}</h3>
+              <h3>{pet.name}</h3>
+              <p>{pet.pet_type && capitalizeFirstLetter(pet.pet_type)}</p>
+              <p>Description: {pet.desc}</p>
               <p>Age: {pet.age} years</p>
-              <p>{pet.pet_type}</p>
               <p>Shelter Name: {pet.shelter_name}</p>
               <p>Shelter Location: {pet.shelter_location}</p>
               <button

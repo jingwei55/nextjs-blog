@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     // console.log("Data received: ", req.body);
 
     // Check if a duplicate entry exists based on both name and shelter
-    const [existingRows] = await query(
+    const existingRows = await query(
       "SELECT * FROM items WHERE name = ? AND IS_FK = ?",
       [name, shelter]
     );

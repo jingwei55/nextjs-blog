@@ -88,6 +88,7 @@ const UpdateShop = ({ onSubmit }) => {
         setItemType("");
         setQuantity("");
         setSelectedShelter("");
+        setNewItemName(""); // Add this line to reset the new item name field
       } else {
         console.error("Failed add item and update shop:", response.statusText);
         // Handle the error
